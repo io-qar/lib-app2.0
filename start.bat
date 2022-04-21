@@ -1,7 +1,10 @@
 @echo off
-cd backend-test
+set frontend = test-old-router
+set backend = backend-test
+
+cd %backend%
 if not exist node_modules\ (
-	if not exist ..\test-old-router\node_modules\ (
+	if not exist ..\%frontend%\node_modules\ (
 		@REM как написать в одной сессии
 		start cmd /k npm i
 		cd ../test-old-router
@@ -11,7 +14,7 @@ if not exist node_modules\ (
 
 start cmd /k node server.js
 for %%I in (.) do set cd = %%~nxI
-if not %cd% == "test-old-router" (
-	cd ../test-old-router
+if not %cd% == "%frontend%" (
+	cd ../%frontend%
 )
 npm start
