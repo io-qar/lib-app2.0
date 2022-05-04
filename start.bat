@@ -1,20 +1,23 @@
 @echo off
-set frontend = test-old-router
-set backend = backend-test
+set backend=backend-test
+set frontend=test-old-router
 
 cd %backend%
 if not exist node_modules\ (
 	if not exist ..\%frontend%\node_modules\ (
 		@REM как написать в одной сессии
-		start cmd /k npm i
-		cd ../test-old-router
-		npm i
+		start cmd /c npm i
+		cd ..\%frontend%
+		@REM нужен другой флаг
+		cmd /c npm i
 	)
 )
 
-start cmd /k node server.js
-for %%I in (.) do set cd = %%~nxI
-if not %cd% == "%frontend%" (
-	cd ../%frontend%
+set servercmd=node server.js
+start cmd /k %servercmd%
+for %%I in (.) do set cd=%%~nxI
+if not %cd%==%frontend% (
+	cd ..\%frontend%
 )
+echo cd done
 npm start
