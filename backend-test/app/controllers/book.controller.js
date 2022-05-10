@@ -31,7 +31,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
 	const name = req.query.name;
 	var condition = name ? {
-		title: {
+		name: {
 			[Op.iLike]: `%${name}%`
 		}
 	} : null;
@@ -114,7 +114,7 @@ exports.deleteAll = (req, res) => {
 		truncate: false
 	}).then(nums => {
 		res.send({
-			message: `${nums} Книги были успешно удалены!`
+			message: `${nums} - столько книг было успешно удалено!`
 		});
 	}).catch(err => {
 		res.status(500).send({

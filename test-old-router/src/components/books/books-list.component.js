@@ -10,7 +10,7 @@ export default class BooksList extends Component {
 		this.refreshList = this.refreshList.bind(this);
 		this.setActiveBook = this.setActiveBook.bind(this);
 		this.removeAllBooks = this.removeAllBooks.bind(this);
-		// this.searchTitle = this.searchTitle.bind(this);
+		this.searchName = this.searchName.bind(this);
 
 		this.state = {
 			books: [],
@@ -68,7 +68,7 @@ export default class BooksList extends Component {
 
 	searchName() {
 		this.setState({
-			currentName: null,
+			currentBook: null,
 			currentIndex: -1
 		});
 
@@ -139,7 +139,7 @@ export default class BooksList extends Component {
 									<strong>Название:</strong>
 								</label>
 								{" "}
-								{currentBook.Name}
+								{currentBook.name}
 							</div>
 							<div>
 								<label>
@@ -153,14 +153,14 @@ export default class BooksList extends Component {
 									<strong>Год издания:</strong>
 								</label>
 								{" "}
-								{currentBook.publisherYear}
+								{currentBook.year}
 							</div>
 							<div>
 								<label>
 									<strong>Номер издания:</strong>
 								</label>
 								{" "}
-								{currentBook.publisherYear}
+								{currentBook.version}
 							</div>
 							<div>
 								<label>

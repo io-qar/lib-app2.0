@@ -16,6 +16,7 @@ export default class Book extends Component {
 		this.updateAuthor = this.updateAuthor.bind(this);
 		this.updateYear = this.updateYear.bind(this);
 		this.updateVersion = this.updateVersion.bind(this);
+		this.updatePublisherName = this.updatePublisherName.bind(this);
 
 		this.updateBook = this.updateBook.bind(this);
 		this.deleteBook = this.deleteBook.bind(this);
@@ -42,7 +43,7 @@ export default class Book extends Component {
 		this.setState(function(prevState) {
 			return {
 				currentBook: {
-					...prevState.currentTutorial,
+					...prevState.currentBook,
 					name: name
 				}
 			};
@@ -53,7 +54,7 @@ export default class Book extends Component {
 		const author = e.target.value;
 		this.setState(prevState => ({
 			currentBook: {
-				...prevState.currentTutorial,
+				...prevState.currentBook,
 				author: author
 			}
 		}));
@@ -63,7 +64,7 @@ export default class Book extends Component {
 		const year = e.target.value;
 		this.setState(prevState => ({
 			currentBook: {
-				...prevState.currentTutorial,
+				...prevState.currentBook,
 				year: year
 			}
 		}));
@@ -73,7 +74,7 @@ export default class Book extends Component {
 		const version = e.target.value;
 		this.setState(prevState => ({
 			currentBook: {
-				...prevState.currentTutorial,
+				...prevState.currentBook,
 				version: version
 			}
 		}));
@@ -83,7 +84,7 @@ export default class Book extends Component {
 		const publisherName = e.target.value;
 		this.setState(prevState => ({
 			currentBook: {
-				...prevState.currentTutorial,
+				...prevState.currentBook,
 				publisherName: publisherName
 			}
 		}));
@@ -140,14 +141,14 @@ export default class Book extends Component {
 	deleteBook() {    
 		BookDataService.delete(this.state.currentBook.id).then(response => {
 			console.log(response.data);
-			this.props.history.push('/tutorials')
+			this.props.history.push('/books')
 		}).catch(e => {
 			console.log(e);
 		});
 	}
 
 	render() {
-		const { currentBook} = this.state;
+		const {currentBook} = this.state;
 		return (
 			<div>
 				{currentBook ? (

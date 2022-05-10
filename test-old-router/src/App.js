@@ -16,7 +16,7 @@ class App extends Component {
 		return (
 			<div>
 				<nav className="navbar navbar-expand navbar-dark bg-dark">
-					<Link to={"/tutorials"} className="navbar-brand">
+					<Link to={"/books"} className="navbar-brand">
 						bezKoder
 					</Link>
 					<div className="navbar-nav mr-auto">
@@ -25,7 +25,7 @@ class App extends Component {
 								Tutorials
 							</Link>
 						</li>
-			<li className="nav-item">
+						<li className="nav-item">
 							<Link to={"/books"} className="nav-link">
 								Books
 							</Link>
