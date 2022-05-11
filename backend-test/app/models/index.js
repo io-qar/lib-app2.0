@@ -11,13 +11,16 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 		idle: dbConfig.pool.idle
 	}
 });
+
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
+
 db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
 db.books = require("./book.model.js")(sequelize, Sequelize);
 db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
+
 db.role.belongsToMany(db.user, {
 	through: "user_roles",
 	foreignKey: "roleId",

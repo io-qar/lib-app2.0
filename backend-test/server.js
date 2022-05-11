@@ -6,6 +6,7 @@ const app = express();
 var corsOptions = {
 	origin: "http://localhost:8081"
 };
+
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -21,7 +22,7 @@ db.sequelize.sync({ force: true }).then(() => {
 	initial();
 });
 
-// require('./app/routes/auth.routes')(app);
+require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
 require("./app/routes/tutorial.routes")(app);
 require("./app/routes/book.routes")(app);
