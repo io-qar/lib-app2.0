@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import AuthService from "../../services/auth.service";
+import BooksList from "../books/books-list.component";
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -16,8 +17,8 @@ export default class Profile extends Component {
 			<div className="container">
 				<header className="jumbotron">
 					<h3>
-						<strong>{currentUser.username}</strong>
-						Профиль
+						Профиль пользователя
+						<strong> {currentUser.username}</strong>
 					</h3>
 				</header>
 				<p>

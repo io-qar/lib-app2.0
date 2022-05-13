@@ -48,9 +48,6 @@ class App extends Component {
 		return (
 			<div>
 				<nav className="navbar navbar-expand navbar-dark bg-dark">
-					<Link to={"/books"} className="navbar-brand">
-						!!
-					</Link>
 					<div className="navbar-nav mr-auto">
 						<li className="nav-item">
 							<Link to={"/home"} className="nav-link">
@@ -59,10 +56,16 @@ class App extends Component {
 						</li>
 						{showModeratorBoard && (
 							<li className="nav-item">
-								<Link to={"/mod"} className="nav-link">
-									Moderator Board
+								<Link to={"/add"} className="nav-link">
+									Добавить книгу
+								</Link>
+								<Link to={"/books"} className="nav-link">
+									Список всех книг
 								</Link>
 							</li>
+						// 	<li className="nav-item">
+							
+						// </li>
 						)}
 						{showAdminBoard && (
 							<li className="nav-item">
@@ -91,12 +94,7 @@ class App extends Component {
 									Выйти
 								</a>
 							</li>
-							<li className="nav-item">
-							<Link to={"/tutorials"} className="nav-link">
-								Tutorials
-							</Link>
-							</li>
-							<li className="nav-item">
+							{/* <li className="nav-item">
 								<Link to={"/books"} className="nav-link">
 									Список всех книг
 								</Link>
@@ -105,7 +103,7 @@ class App extends Component {
 								<Link to={"/add"} className="nav-link">
 									Добавить книгу
 								</Link>
-							</li>
+							</li> */}
 						</div>
 					) : (
 						<div className="navbar-nav ml-auto">
@@ -139,6 +137,7 @@ class App extends Component {
 
 						<Route exact path="/add" component={AddBook} />
 						<Route path="/books/:id" component={Book} />
+						<Route path="/books/" component={BooksList} />
 					</Switch>
 				</div>
 			</div>

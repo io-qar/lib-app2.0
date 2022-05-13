@@ -3,6 +3,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
+import image from "../../images/account_circle_FILL0_wght400_GRAD0_opsz48.svg"
 
 const required = value => {
 	if (!value) {
@@ -73,9 +74,12 @@ export default class Login extends Component {
 			<div className="col-md-12">
 				<div className="card card-container">
 					<img
-						src="/public/account_circle_FILL0_wght400_GRAD0_opsz48.svg"
+						src={image}
 						alt="profile-img"
 						className="profile-img-card"
+						style={{
+							alignSelf: 'center'
+						}}
 					/>
 					<Form
 						onSubmit={this.handleLogin}
