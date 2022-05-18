@@ -39,7 +39,9 @@ exports.findAll = (req, res) => {
 		}
 	} : null;
 
-	Book.findAll({ where: condition }).then(data => {
+	Book.findAll({
+		where: condition
+	}).then(data => {
 		res.send(data);
 	}).catch(err => {
 		res.status(500).send({
@@ -53,13 +55,13 @@ exports.findOne = (req, res) => {
 	const id = req.params.id;
 
 	Book.findByPk(id).then(data => {
-		if (data) {
+		// if (data) {
 			res.send(data);
-		} else {
-			res.status(404).send({
-				message: `Нельзя найти книгу с ID ${id}`
-			});
-		}
+		// } else {
+		// 	res.status(404).send({
+		// 		message: `Нельзя найти книгу с ID ${id}`
+		// 	});
+		// }
 	}).catch(err => {
 		res.status(500).send({
 			message: "Ошибка во время поиска книги с ID " + id

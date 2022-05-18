@@ -6,9 +6,10 @@ module.exports = app => {
 
 	router.get("/", books.findAll);
 
+	router.get("/rented", books.findAllRented);
+
 	router.get("/:id", books.findOne);
 
-	router.get("/rented", books.findAllRented);
 
 	router.put("/:id", books.update);
 

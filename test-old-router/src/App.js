@@ -6,6 +6,7 @@ import "./App.css";
 import AddBook from "./components/books/add-book.components";
 import Book from "./components/books/book.component";
 import BooksList from "./components/books/books-list.component";
+import RentedBooksList from "./components/books/rented-books-list.component";
 import AuthService from "./services/auth.service";
 import Login from "./components/login/login.component";
 import Register from "./components/login/register.component";
@@ -80,20 +81,20 @@ class App extends Component {
 										Список всех книг
 									</Link>
 								</li>
-								{/* <li className="nav-item">
-									<Link to={"/books"} className="nav-link">
-										Список всех взятых книг
+								<li className="nav-item">
+									<Link to={"/rented"} className="nav-link">
+										Список взятых книг
 									</Link>
-								</li> */}
+								</li>
 							</div>
 						)}
 						{currentUser && (
 							<div className="navbar-nav ml-auto">
-								<li className="nav-item">
-									<Link to={"/books"} className="nav-link">
-										Список всех книг
+								{/* <li className="nav-item">
+									<Link to={"/rented"} className="nav-link">
+										Список взятых книг
 									</Link>
-								</li>
+								</li> */}
 							</div>
 						)}
 					</div>
@@ -139,6 +140,7 @@ class App extends Component {
 						<Route exact path="/add" component={AddBook} />
 						<Route path="/books/:id" component={Book} />
 						<Route path="/books/" component={BooksList} />
+						<Route path="/rented/" component={RentedBooksList} />
 					</Switch>
 				</div>
 			</div>
