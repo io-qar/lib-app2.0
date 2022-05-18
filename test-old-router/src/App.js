@@ -47,7 +47,7 @@ class App extends Component {
 
 		return (
 			<div>
-				<nav className="navbar navbar-expand navbar-dark bg-dark">
+				<nav className="navbar navbar-expand navbar-light bg-light">
 					<div className="navbar-nav mr-auto">
 						<li className="nav-item">
 							<Link to={"/home"} className="nav-link">
@@ -80,11 +80,11 @@ class App extends Component {
 										Список всех книг
 									</Link>
 								</li>
-								<li className="nav-item">
+								{/* <li className="nav-item">
 									<Link to={"/books"} className="nav-link">
 										Список всех взятых книг
 									</Link>
-								</li>
+								</li> */}
 							</div>
 						)}
 						{currentUser && (
