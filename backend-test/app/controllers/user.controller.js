@@ -1,5 +1,5 @@
 exports.allAccess = (req, res) => {
-	res.status(200).send("Welcome aboard!");
+	res.status(200).send("Добро пожаловать на сайт!");
 };
 exports.userBoard = (req, res) => {
 	res.status(200).send("User Content.");

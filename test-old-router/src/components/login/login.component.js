@@ -19,8 +19,10 @@ export default class Login extends Component {
 	constructor(props) {
 		super(props);
 		this.handleLogin = this.handleLogin.bind(this);
+
 		this.onChangeUsername = this.onChangeUsername.bind(this);
 		this.onChangePassword = this.onChangePassword.bind(this);
+
 		this.state = {
 			username: "",
 			password: "",
@@ -88,7 +90,7 @@ export default class Login extends Component {
 						}}
 					>
 						<div className="form-group">
-							<label htmlFor="username">Пользователь</label>
+							<label htmlFor="username">Имя пользователя:</label>
 							<Input
 								type="text"
 								className="form-control"
@@ -99,7 +101,7 @@ export default class Login extends Component {
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="password">Пароль</label>
+							<label htmlFor="password">Пароль:</label>
 							<Input
 								type="password"
 								className="form-control"
@@ -117,7 +119,7 @@ export default class Login extends Component {
 								{this.state.loading && (
 									<span className="spinner-border spinner-border-sm"></span>
 								)}
-								<span>Логин</span>
+								<span>Войти в аккаунт</span>
 							</button>
 						</div>
 						{this.state.message && (

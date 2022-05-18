@@ -22,7 +22,7 @@ class App extends Component {
 		this.state = {
 			showModeratorBoard: false,
 			showAdminBoard: false,
-			currentUser: undefined,
+			currentUser: undefined
 		};
 	}
 
@@ -55,31 +55,46 @@ class App extends Component {
 							</Link>
 						</li>
 						{showModeratorBoard && (
-							<li className="nav-item">
-								<Link to={"/add"} className="nav-link">
-									Добавить книгу
-								</Link>
-								<Link to={"/books"} className="nav-link">
-									Список всех книг
-								</Link>
-							</li>
-						// 	<li className="nav-item">
-							
-						// </li>
+							<div>
+								{/* <li className="nav-item">
+									<Link to={"/add"} className="nav-link">
+										Добавить книгу
+									</Link>									
+								</li> */}
+								{/* <li className="nav-item">
+									<Link to={"/books"} className="nav-link">
+										Список всех книг
+									</Link>
+								</li> */}
+							</div>
 						)}
 						{showAdminBoard && (
-							<li className="nav-item">
-								<Link to={"/admin"} className="nav-link">
-									Admin Board
-								</Link>
-							</li>
+							<div className="navbar-nav ml-auto">
+								<li className="nav-item">
+									<Link to={"/add"} className="nav-link">
+										Добавить книгу
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link to={"/books"} className="nav-link">
+										Список всех книг
+									</Link>
+								</li>
+								<li className="nav-item">
+									<Link to={"/books"} className="nav-link">
+										Список всех взятых книг
+									</Link>
+								</li>
+							</div>
 						)}
 						{currentUser && (
-							<li className="nav-item">
-								<Link to={"/user"} className="nav-link">
-									User
-								</Link>
-							</li>
+							<div className="navbar-nav ml-auto">
+								<li className="nav-item">
+									<Link to={"/books"} className="nav-link">
+										Список всех книг
+									</Link>
+								</li>
+							</div>
 						)}
 					</div>
 					{currentUser ? (
@@ -94,16 +109,6 @@ class App extends Component {
 									Выйти
 								</a>
 							</li>
-							{/* <li className="nav-item">
-								<Link to={"/books"} className="nav-link">
-									Список всех книг
-								</Link>
-							</li>
-							<li className="nav-item">
-								<Link to={"/add"} className="nav-link">
-									Добавить книгу
-								</Link>
-							</li> */}
 						</div>
 					) : (
 						<div className="navbar-nav ml-auto">
@@ -123,10 +128,6 @@ class App extends Component {
 
 				<div className="container mt-3">
 					<Switch>
-						{/* <Route exact path={["/", "/tutorials"]} component={TutorialsList} />
-						<Route exact path="/add" component={AddTutorial} />
-						<Route path="/tutorials/:id" component={Tutorial} /> */}
-
 						<Route exact path={["/", "/home"]} component={Home} />
 						<Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />

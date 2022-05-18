@@ -1,11 +1,13 @@
 import React, { Component } from "react";
 import BookDataService from "../../services/book.service";
+import AuthService from "../../services/auth.service";
 import { Link } from "react-router-dom";
 
 export default class BooksList extends Component {
 	constructor(props) {
 		super(props);
 		this.onChangeSearchName = this.onChangeSearchName.bind(this);
+
 		this.retrieveBooks = this.retrieveBooks.bind(this);
 		this.refreshList = this.refreshList.bind(this);
 		this.setActiveBook = this.setActiveBook.bind(this);
@@ -16,16 +18,30 @@ export default class BooksList extends Component {
 			books: [],
 			currentBook: null,
 			currentIndex: -1,
-			searchName: ""
+			searchName: "",
+			showModeratorBoard: false,
+			showAdminBoard: false,
+			currentUser: undefined
 		};
 	}
 
 	componentDidMount() {
 		this.retrieveBooks();
+
+		const user = AuthService.getCurrentUser();
+
+		if (user) {
+			this.setState({
+				currentUser: user,
+				showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+				showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+			});
+		}
 	}
 
 	onChangeSearchName(e) {
 		const searchName = e.target.value;
+
 		this.setState({
 			searchName: searchName
 		});
@@ -44,6 +60,7 @@ export default class BooksList extends Component {
 
 	refreshList() {
 		this.retrieveBooks();
+
 		this.setState({
 			currentBook: null,
 			currentIndex: -1
@@ -83,7 +100,7 @@ export default class BooksList extends Component {
 	}
 
 	render() {
-		const { searchName, books, currentBook, currentIndex } = this.state;
+		const { searchName, books, currentBook, currentIndex, showAdminBoard } = this.state;
 		return (
 			<div className="list row">
 				<div className="col-md-8">
@@ -123,12 +140,14 @@ export default class BooksList extends Component {
 							</li>
 						))}
 					</ul>
-					<button
-						className="m-3 btn btn-sm btn-danger"
-						onClick={this.removeAllBooks}
-					>
-						Удалить все книги
-					</button>
+					{showAdminBoard && (
+						<button
+							className="m-3 btn btn-sm btn-danger"
+							onClick={this.removeAllBooks}
+						>
+							Удалить все книги
+						</button>
+					)}
 				</div>
 				<div className="col-md-6">
 					{currentBook ? (
@@ -168,6 +187,13 @@ export default class BooksList extends Component {
 								</label>
 								{" "}
 								{currentBook.publisherName}
+							</div>
+							<div>
+								<label>
+									<strong>Статус:</strong>
+								</label>
+								{" "}
+								{currentBook.rented ? "Занята" : "Свободна"}
 							</div>
 							<Link
 								to={"/books/" + currentBook.id}

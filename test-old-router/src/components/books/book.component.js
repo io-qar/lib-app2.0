@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import BookDataService from "../../services/book.service";
+import AuthService from "../../services/auth.service";
 
 export default class Book extends Component {
 	constructor(props) {
@@ -12,12 +13,7 @@ export default class Book extends Component {
 
 		this.getBook = this.getBook.bind(this);
 
-		this.updateName = this.updateName.bind(this);
-		this.updateAuthor = this.updateAuthor.bind(this);
-		this.updateYear = this.updateYear.bind(this);
-		this.updateVersion = this.updateVersion.bind(this);
-		this.updatePublisherName = this.updatePublisherName.bind(this);
-
+		this.updateRented = this.updateRented.bind(this)
 		this.updateBook = this.updateBook.bind(this);
 		this.deleteBook = this.deleteBook.bind(this);
 
@@ -28,14 +24,28 @@ export default class Book extends Component {
 				author: "",
 				year: null,
 				version: null,
-				publisherName: ""
+				publisherName: "",
+				rented: false
 			},
+			showModeratorBoard: false,
+			showAdminBoard: false,
+			currentUser: undefined,
 			message: ""
 		};
 	}
 
 	componentDidMount() {
 		this.getBook(this.props.match.params.id);
+
+		const user = AuthService.getCurrentUser();
+
+		if (user) {
+			this.setState({
+				currentUser: user,
+				showModeratorBoard: user.roles.includes("ROLE_MODERATOR"),
+				showAdminBoard: user.roles.includes("ROLE_ADMIN"),
+			});
+		}
 	}
 
 	onChangeName(e) {
@@ -101,28 +111,29 @@ export default class Book extends Component {
 		});
 	}
 
-	// updatePublished(status) {
-	// 	var data = {
-	// 		id: this.state.currentTutorial.id,
-	// 		title: this.state.currentTutorial.title,
-	// 		description: this.state.currentTutorial.description,
-	// 		published: status
-	// 	};
+	updateRented(status) {
+		var data = {
+			id: this.state.currentBook.id,
+			name: this.state.currentBook.name,
+			author: this.state.currentBook.author,
+			year: this.state.currentBook.year,
+			version: this.state.currentBook.version,
+			publisherName: this.state.currentBook.publisherName,
+			rented: status
+		};
 
-	// 	TutorialDataService.update(this.state.currentTutorial.id, data)
-	// 		.then(response => {
-	// 			this.setState(prevState => ({
-	// 				currentTutorial: {
-	// 					...prevState.currentTutorial,
-	// 					published: status
-	// 				}
-	// 			}));
-	// 			console.log(response.data);
-	// 		})
-	// 		.catch(e => {
-	// 			console.log(e);
-	// 		});
-	// }
+		BookDataService.update(this.state.currentBook.id, data).then(response => {
+			this.setState(prevState => ({
+				currentBook: {
+					...prevState.currentBook,
+					rented: status
+				}
+			}));
+			console.log(response.data);
+		}).catch(e => {
+			console.log(e);
+		});
+	}
 
 	updateBook() {
 		BookDataService.update(
@@ -148,7 +159,7 @@ export default class Book extends Component {
 	}
 
 	render() {
-		const {currentBook} = this.state;
+		const {currentBook, showModeratorBoard, showAdminBoard} = this.state;
 		return (
 			<div>
 				{currentBook ? (
@@ -156,7 +167,7 @@ export default class Book extends Component {
 						<h4>Книга</h4>
 						<form>
 							<div className="form-group">
-								<label htmlFor="name">Название</label>
+								<label htmlFor="name">Название книги</label>
 								<input
 									type="text"
 									className="form-control"
@@ -166,7 +177,7 @@ export default class Book extends Component {
 								/>
 							</div>
 							<div className="form-group">
-								<label htmlFor="author">Автор</label>
+								<label htmlFor="author">Автор книги</label>
 								<input
 									type="text"
 									className="form-control"
@@ -176,7 +187,7 @@ export default class Book extends Component {
 								/>
 							</div>
 							<div className="form-group">
-								<label htmlFor="version">Номер издания</label>
+								<label htmlFor="version">Номер издания книги</label>
 								<input
 									type="text"
 									className="form-control"
@@ -195,21 +206,52 @@ export default class Book extends Component {
 									onChange={this.onChangePublisherName}
 								/>
 							</div>
+							<div className="form-group">
+								<label>
+									<strong>Статус:</strong>
+								</label>
+								{currentBook.rented ? " Занята" : " Свободна"}
+							</div>
 						</form>
-
-						<button
-							className="badge badge-danger mr-2"
-							onClick={this.deleteBook}
-						>
-							Удалить
-						</button>
-						<button
-							type="submit"
-							className="badge badge-success"
-							onClick={this.updateBook}
-						>
-							Обновить
-						</button>
+						{showModeratorBoard && (
+							<div>
+								{currentBook.rented ? (
+									<button
+										className="badge badge-primary mr-2"
+										onClick={
+											() => this.updateRented(false)
+										}
+									>
+										Отдать книгу библиотеке
+									</button>) : (
+									<button
+										className="badge badge-primary mr-2"
+										onClick={
+											() => this.updateRented(true)
+										}
+									>
+										Взять книгу из библиотеки
+									</button>)
+								}
+							</div>)
+						}
+						{showAdminBoard && (
+							<button
+								className="badge badge-danger mr-2"
+								onClick={this.deleteBook}
+							>
+								Удалить
+							</button>
+						)}
+						{showModeratorBoard && (
+							<button
+								type="submit"
+								className="badge badge-success"
+								onClick={this.updateBook}
+							>
+								Обновить
+							</button>
+						)}
 						<p>{this.state.message}</p>
 					</div>
 				) : (

@@ -15,6 +15,9 @@ module.exports = (sequelize, Sequelize) => {
 		publisherName: {
 			type: Sequelize.STRING
 		},
+		rented: {
+			type: Sequelize.BOOLEAN
+		}
 	});
 	return Book;
 }

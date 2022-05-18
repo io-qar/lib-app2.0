@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import AuthService from "../../services/auth.service";
-import BooksList from "../books/books-list.component";
 
 export default class Profile extends Component {
 	constructor(props) {
@@ -22,15 +21,15 @@ export default class Profile extends Component {
 					</h3>
 				</header>
 				<p>
-					<strong>Токен:</strong>{" "}
+					<strong>Ваш токен:</strong>{" "}
 					{currentUser.accessToken.substring(0, 20)}...{" "}
 					{currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
 				</p>
 				<p>
-					<strong>ID:</strong>{" "}
+					<strong>ID пользователя:</strong>{" "}
 					{currentUser.id}
 				</p>
-				<strong>Роли:</strong>
+				<strong>Роли пользователя:</strong>
 				<ul>
 					{currentUser.roles && currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
 				</ul>

@@ -19,7 +19,9 @@ export default class AddBook extends Component {
 			author: "",
 			year: 2022,
 			version: 1,
-			publisherName: ""
+			publisherName: "",
+			rented: false,
+			submitted: false
 		};
 	}
 
@@ -69,7 +71,9 @@ export default class AddBook extends Component {
 				author: response.data.author,
 				version: response.data.version,
 				year: response.data.year,
-				publisherName: response.data.publisherName
+				publisherName: response.data.publisherName,
+				rented: response.data.rented,
+				submitted: true
 			});
 			console.log(response.data);
 		}).catch(e => {
@@ -85,6 +89,7 @@ export default class AddBook extends Component {
 			version: 1,
 			year: 2022,
 			publisherName: "",
+			rented: true,
 			submitted: false
 		});
 	}
@@ -94,13 +99,13 @@ export default class AddBook extends Component {
 			<div className="submit-form">
 				{this.state.submitted ? (
 					<div>
-						<h4>Книга была учпешно добавлена!</h4>
-						<button className="btn btn-success" onClick={this.newBook}>Добавить</button>
+						<h4>Книга была уcпешно добавлена!</h4>
+						<button className="btn btn-success" onClick={this.newBook}>Добавить ещё одну...</button>
 					</div>
 				) : (
 					<div>
 						<div className="form-group">
-							<label htmlFor="name">Название</label>
+							<label htmlFor="name">Название книги</label>
 							<input
 								type="text"
 								className="form-control"
@@ -112,7 +117,7 @@ export default class AddBook extends Component {
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="author">Автор</label>
+							<label htmlFor="author">Автор книги</label>
 							<input
 								type="text"
 								className="form-control"
@@ -124,7 +129,7 @@ export default class AddBook extends Component {
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="version">Номер издания</label>
+							<label htmlFor="version">Номер издания книги</label>
 							<input
 								type="text"
 								className="form-control"
@@ -136,7 +141,7 @@ export default class AddBook extends Component {
 							/>
 						</div>
 						<div className="form-group">
-							<label htmlFor="year">Год издания</label>
+							<label htmlFor="year">Год издания книги</label>
 							<input
 								type="text"
 								className="form-control"
@@ -159,7 +164,7 @@ export default class AddBook extends Component {
 								name="publisherName"
 							/>
 						</div>
-						<button onClick={this.saveBook} className="btn btn-success">Добавить</button>
+						<button onClick={this.saveBook} className="btn btn-success">Добавить книгу</button>
 					</div>
 				)}
 			</div>

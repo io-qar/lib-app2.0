@@ -3,7 +3,6 @@ const ROLES = db.ROLES;
 const User = db.user;
 
 checkDuplicateUsername = (req, res, next) => {
-	// Username
 	User.findOne({
 		where: {
 			username: req.body.username
@@ -13,6 +12,7 @@ checkDuplicateUsername = (req, res, next) => {
 			res.status(400).send({
 				message: "Ошибка! Имя пользователя уже занято!"
 			});
+
 			return;
 		}
 		next();
@@ -26,6 +26,7 @@ checkRolesExisted = (req, res, next) => {
 				res.status(400).send({
 					message: "Ошибка! Такой роли не существует: " + req.body.roles[i]
 				});
+
 				return;
 			}
 		}
@@ -37,4 +38,5 @@ const verifySignUp = {
 	checkDuplicateUsername: checkDuplicateUsername,
 	checkRolesExisted: checkRolesExisted
 };
+
 module.exports = verifySignUp;

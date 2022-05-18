@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
+import Select from "react-validation/build/select";
 import CheckButton from "react-validation/build/button";
 import AuthService from "../../services/auth.service";
 import image from "../../images/account_circle_FILL0_wght400_GRAD0_opsz48.svg"
@@ -39,11 +40,15 @@ export default class Register extends Component {
 	constructor(props) {
 		super(props);
 		this.handleRegister = this.handleRegister.bind(this);
+
 		this.onChangeUsername = this.onChangeUsername.bind(this);
 		this.onChangePassword = this.onChangePassword.bind(this);
+		this.onChangeRoles = this.onChangeRoles.bind(this);
+
 		this.state = {
 			username: "",
 			password: "",
+			roles: [],
 			successful: false,
 			message: ""
 		};
@@ -61,6 +66,14 @@ export default class Register extends Component {
 		});
 	}
 
+	onChangeRoles(e) {
+		this.setState({
+			roles: [
+				e.target.value
+			]
+		});
+	}
+
 	handleRegister(e) {
 		e.preventDefault();
 
@@ -70,8 +83,9 @@ export default class Register extends Component {
 		});
 
 		this.form.validateAll();
+
 		if (this.checkBtn.context._errors.length === 0) {
-			AuthService.register(this.state.username, this.state.email, this.state.password).then(
+			AuthService.register(this.state.username, this.state.password, this.state.roles).then(
 				response => {
 					this.setState({
 						message: response.data.message,
@@ -111,7 +125,7 @@ export default class Register extends Component {
 						{!this.state.successful && (
 							<div>
 								<div className="form-group">
-									<label htmlFor="username">Логин</label>
+									<label htmlFor="username">Имя пользователя</label>
 									<Input
 										type="text"
 										className="form-control"
@@ -131,6 +145,20 @@ export default class Register extends Component {
 										onChange={this.onChangePassword}
 										validations={[required, vpassword]}
 									/>
+								</div>
+								<div className="form-group">
+								<label htmlFor="roles">Роль</label>
+									<Select
+										className="form-control"
+										name="roles[]"
+										onChange={this.onChangeRoles}
+										value={this.state.roles}
+									>
+										<option value={["admin"]}>Администратор</option>
+										<option value={["moderator"]}>Модератор</option>
+										<option value={["user"]}>Обычный пользователь</option>
+									</Select>
+									{/* <h1>You chose {this.state.roles}</h1> */}
 								</div>
 								<div className="form-group">
 									<button className="btn btn-primary btn-block">Зарегистрироваться</button>
